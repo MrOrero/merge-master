@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@tensorflow/tfjs";
 import * as bodyPix from "@tensorflow-models/body-pix";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Container } from "react-bootstrap";
 import Upload from "./upload";
 import Loading from "./loading";
 import { ReceiptIcon } from "./assets/svgs";
@@ -181,7 +181,8 @@ function App() {
   };
 
   return (
-    <>
+    <Container>
+
       {isLoading && <Loading />}
       <canvas
         ref={canvasRef}
@@ -262,7 +263,7 @@ function App() {
           </button>
         </>
       )}
-    </>
+    </Container>
   );
 }
 

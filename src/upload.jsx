@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Container } from "react-bootstrap";
 
 function Upload({ Icon, title, onSetImage }) {
   const [yourImage, setYourImage] = useState(null);
@@ -14,9 +15,9 @@ function Upload({ Icon, title, onSetImage }) {
   };
 
   return (
-    <div className="upload-box upload-container mt-5">
-      <div className="inner-box upload-container">
-        <div className="upload-box-content">
+    <Container className="upload-box">
+      {/* <div className=""> */}
+        <div className="upload-box-content inner-box ">
           {Icon && <Icon />}
           <label htmlFor={`fileInput-${title}`} className="upload-label">
             <span className="upload-box-button">Select {title} file</span>
@@ -30,8 +31,8 @@ function Upload({ Icon, title, onSetImage }) {
             {receiptImage && <p className="text-white mt-2">{receiptImage.name}</p>}
           </label>
         </div>
-      </div>
-    </div>
+      {/* </div> */}
+    </Container>
   );
 }
 
