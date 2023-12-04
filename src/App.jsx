@@ -46,7 +46,7 @@ function App() {
     if (layout === "side-by-side" && !shouldRemoveBackground) {
       setIsLoading(true);
       setIsMerged(true);
-      return mergeImages();
+      return mergeImages(null);
     }
     if (layout === "side-by-side" && shouldRemoveBackground) {
       setIsLoading(true);
