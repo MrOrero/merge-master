@@ -26,7 +26,7 @@ function Upload({ Icon, title, onSetImage }) {
             id={`fileInput-${title}`}
             onChange={(e) => setImage(e, title)}
             style={{ display: "none" }}
-            accept="image/*"
+            // accept="image/*"
           />
           {yourImage && <p className="text-white mt-2">{yourImage.name}</p>}
           {receiptImage && (
