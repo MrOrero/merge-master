@@ -5,7 +5,7 @@ import * as bodyPix from "@tensorflow-models/body-pix";
 import { Row, Col, Container } from "react-bootstrap";
 import Upload from "./upload";
 import Loading from "./loading";
-import { ReceiptIcon } from "./assets/svgs";
+import { ReceiptIcon, ImageIcon } from "./assets/svgs";
 import "./App.css";
 
 function App() {
@@ -239,7 +239,7 @@ function App() {
           </div>
           <div className="mt-5">
             <h1 className="uploadHeading">Upload Image</h1>
-            <Upload Icon={ReceiptIcon} title={"Image"} onSetImage={setImage} />
+            <Upload Icon={ImageIcon} title={"Image"} onSetImage={setImage} />
           </div>
           <div className="layout-options">
             <Row className="mt-5 optionscontainer">
