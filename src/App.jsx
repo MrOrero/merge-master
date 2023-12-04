@@ -56,7 +56,7 @@ function App() {
     }
   };
 
-  const loadImage = async overlap => {
+  const loadImage = async (overlap) => {
     const img = new Image();
     img.crossOrigin = "Anonymous";
     const canvas = canvasRef.current;
@@ -96,7 +96,12 @@ function App() {
     });
 
     // Extracting image data
-    const { data: imgData } = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const { data: imgData } = ctx.getImageData(
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
 
     // Creating new image data
     const newImg = ctx.createImageData(canvas.width, canvas.height);
@@ -109,8 +114,12 @@ function App() {
         imgData[i * 4 + 2],
         imgData[i * 4 + 3],
       ];
-      [newImgData[i * 4], newImgData[i * 4 + 1], newImgData[i * 4 + 2], newImgData[i * 4 + 3]] =
-        !map[i] ? [255, 255, 255, 0] : [r, g, b, a];
+      [
+        newImgData[i * 4],
+        newImgData[i * 4 + 1],
+        newImgData[i * 4 + 2],
+        newImgData[i * 4 + 3],
+      ] = !map[i] ? [255, 255, 255, 0] : [r, g, b, a];
     }
 
     // Draw the new image back to canvas
@@ -142,7 +151,13 @@ function App() {
           ctx.fillRect(0, 0, canvas.width, canvas.height);
           ctx.drawImage(receiptImg, 0, 0);
 
-          ctx.drawImage(yourImg, 0, 0, receiptImg.width * 0.7, receiptImg.height * 0.7);
+          ctx.drawImage(
+            yourImg,
+            0,
+            0,
+            receiptImg.width * 0.7,
+            receiptImg.height * 0.7
+          );
           setIsLoading(false);
         } else {
           yourImg.width = receiptImg.width;
@@ -152,7 +167,13 @@ function App() {
           ctx.fillRect(0, 0, canvas.width, canvas.height);
           ctx.drawImage(receiptImg, 0, 0);
 
-          ctx.drawImage(yourImg, receiptImg.width, 0, receiptImg.width, receiptImg.height);
+          ctx.drawImage(
+            yourImg,
+            receiptImg.width,
+            0,
+            receiptImg.width,
+            receiptImg.height
+          );
           setIsLoading(false);
         }
 
@@ -182,7 +203,6 @@ function App() {
 
   return (
     <Container>
-
       {isLoading && <Loading />}
       <canvas
         ref={canvasRef}
@@ -202,23 +222,31 @@ function App() {
 
       {!isMerged && (
         <>
-          <h1 className="mt-4 mb-5">MergeMaster</h1>
+          <h1 className="mt-4 mb-5 mergemaster">
+            Merge<span>Master</span>
+          </h1>
 
-          <h3 className="mb-5">Streets may forget. but we will never...</h3>
+          <h3 className="mb-5 mergemastersubtitle">
+            Streets may forget but we will never...
+          </h3>
           <div>
-            <h1>Upload Reciept</h1>
-            <Upload Icon={ReceiptIcon} title={"Reciept"} onSetImage={setImage} />
+            <h1 className="uploadHeading">Upload Reciept</h1>
+            <Upload
+              Icon={ReceiptIcon}
+              title={"Reciept"}
+              onSetImage={setImage}
+            />
           </div>
           <div className="mt-5">
-            <h1>Upload Image</h1>
+            <h1 className="uploadHeading">Upload Image</h1>
             <Upload Icon={ReceiptIcon} title={"Image"} onSetImage={setImage} />
           </div>
           <div className="layout-options">
-            <Row className="mt-5">
+            <Row className="mt-5 optionscontainer">
               <Col>
-                <div>
+                <div className="forLayoutLabel">
                   <h4>Layout</h4>
-                  <label className="me-4">
+                  <label>
                     <input
                       type="radio"
                       name="layoutOption"
@@ -241,15 +269,17 @@ function App() {
                 </div>
               </Col>
               <Col>
-                <div>
-                  <h4>Remove Image Background?</h4>
-                  <div>
+                <div className="removeBG">
+                  <h4 className="removeBGHeading">Remove Image Background?</h4>
+                  <div className="removeBGcheckbox__container">
                     <label>
                       <input
                         type="checkbox"
                         name="removeBackground"
                         checked={shouldRemoveBackground}
-                        onChange={() => setShouldRemoveBackground(!shouldRemoveBackground)}
+                        onChange={() =>
+                          setShouldRemoveBackground(!shouldRemoveBackground)
+                        }
                       />
                       Yes
                     </label>
@@ -258,7 +288,7 @@ function App() {
               </Col>
             </Row>
           </div>
-          <button className="merge-button mt-4" onClick={merge}>
+          <button className="merge-button mt-4 mb-4" onClick={merge}>
             Merge
           </button>
         </>
