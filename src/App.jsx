@@ -20,14 +20,14 @@ function App() {
 
   const fileReader1 = new FileReader();
 
-  useEffect(() => {
-    if (image) {
-      checkAndCompressImage(image, setYourImage);
-    }
-    if (receipt) {
-      checkAndCompressImage(receipt, setReceiptImage);
-    }
-  }, [image, receipt]);
+  // useEffect(() => {
+  //   if (image) {
+  //     checkAndCompressImage(image, setYourImage);
+  //   }
+  //   if (receipt) {
+  //     checkAndCompressImage(receipt, setReceiptImage);
+  //   }
+  // }, [image, receipt]);
 
   const setImage = (image, title) => {
     if (title === "Reciept") {
@@ -67,39 +67,36 @@ function App() {
 
   const checkAndCompressImage = async (file, setImage) => {
     if (file.size < 500 * 1024) {
-      return 
-    }else{
-      
-          const compressedImage = await compressImage(file, {
-            // 0: is maximum compression
-            // 1: is no compression
-            quality: 0.5,
-      
-            // We want a JPEG file
-            type: "image/jpeg",
-          });
-          setImage(compressedImage);
+      return;
+    } else {
+      const compressedImage = await compressImage(file, {
+        // 0: is maximum compression
+        // 1: is no compression
+        quality: 0.5,
 
+        // We want a JPEG file
+        type: "image/jpeg",
+      });
+      setImage(compressedImage);
     }
-
   };
 
   const compressImage = async (file, { quality = 1, type = file.type }) => {
     // Get as image data
     const imageBitmap = await createImageBitmap(file);
-  
+
     // Draw to canvas
     const canvas = document.createElement("canvas");
     canvas.width = imageBitmap.width;
     canvas.height = imageBitmap.height;
     const ctx = canvas.getContext("2d");
     ctx.drawImage(imageBitmap, 0, 0);
-  
+
     // Turn into Blob
-    return await new Promise((resolve) => canvas.toBlob(resolve, type, quality));
+    return await new Promise(resolve => canvas.toBlob(resolve, type, quality));
   };
 
-  const loadImage = async (overlap) => {
+  const loadImage = async overlap => {
     const img = new Image();
     img.crossOrigin = "Anonymous";
     const canvas = canvasRef.current;
@@ -136,12 +133,7 @@ function App() {
     });
 
     // Extracting image data
-    const { data: imgData } = ctx.getImageData(
-      0,
-      0,
-      canvas.width,
-      canvas.height
-    );
+    const { data: imgData } = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
     // Creating new image data
     const newImg = ctx.createImageData(canvas.width, canvas.height);
@@ -154,12 +146,8 @@ function App() {
         imgData[i * 4 + 2],
         imgData[i * 4 + 3],
       ];
-      [
-        newImgData[i * 4],
-        newImgData[i * 4 + 1],
-        newImgData[i * 4 + 2],
-        newImgData[i * 4 + 3],
-      ] = !map[i] ? [255, 255, 255, 0] : [r, g, b, a];
+      [newImgData[i * 4], newImgData[i * 4 + 1], newImgData[i * 4 + 2], newImgData[i * 4 + 3]] =
+        !map[i] ? [255, 255, 255, 0] : [r, g, b, a];
     }
 
     // Draw the new image back to canvas
@@ -170,7 +158,6 @@ function App() {
     } else {
       mergeImages(canvas.toDataURL("image/png"));
     }
-
   };
 
   const mergeImages = (newImgData, overlap) => {
@@ -190,13 +177,7 @@ function App() {
           ctx.fillRect(0, 0, canvas.width, canvas.height);
           ctx.drawImage(receiptImg, 0, 0);
 
-          ctx.drawImage(
-            yourImg,
-            0,
-            0,
-            receiptImg.width * 0.7,
-            receiptImg.height * 0.7
-          );
+          ctx.drawImage(yourImg, 0, 0, receiptImg.width * 0.7, receiptImg.height * 0.7);
           setIsLoading(false);
         } else {
           yourImg.width = receiptImg.width;
@@ -206,13 +187,7 @@ function App() {
           ctx.fillRect(0, 0, canvas.width, canvas.height);
           ctx.drawImage(receiptImg, 0, 0);
 
-          ctx.drawImage(
-            yourImg,
-            receiptImg.width,
-            0,
-            receiptImg.width,
-            receiptImg.height
-          );
+          ctx.drawImage(yourImg, receiptImg.width, 0, receiptImg.width, receiptImg.height);
           setIsLoading(false);
         }
 
@@ -263,16 +238,10 @@ function App() {
             Merge<span>Master</span>
           </h1>
 
-          <h3 className="mb-5 mergemastersubtitle">
-            Streets may forget but we will never...
-          </h3>
+          <h3 className="mb-5 mergemastersubtitle">Streets may forget but we will never...</h3>
           <div>
             <h1 className="uploadHeading">Upload Reciept</h1>
-            <Upload
-              Icon={ReceiptIcon}
-              title={"Reciept"}
-              onSetImage={setImage}
-            />
+            <Upload Icon={ReceiptIcon} title={"Reciept"} onSetImage={setImage} />
           </div>
           <div className="mt-5">
             <h1 className="uploadHeading">Upload Image</h1>
@@ -314,9 +283,7 @@ function App() {
                         type="checkbox"
                         name="removeBackground"
                         checked={shouldRemoveBackground}
-                        onChange={() =>
-                          setShouldRemoveBackground(!shouldRemoveBackground)
-                        }
+                        onChange={() => setShouldRemoveBackground(!shouldRemoveBackground)}
                       />
                       Yes
                     </label>
