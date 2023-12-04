@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@tensorflow/tfjs";
 import * as bodyPix from "@tensorflow-models/body-pix";
@@ -19,6 +19,15 @@ function App() {
   const canvasRef = useRef(null);
 
   const fileReader1 = new FileReader();
+
+  useEffect(() => {
+    if (image) {
+      checkAndCompressImage(image, setYourImage);
+    }
+    if (receipt) {
+      checkAndCompressImage(receipt, setReceiptImage);
+    }
+  }, [image, receipt]);
 
   const setImage = (image, title) => {
     if (title === "Reciept") {
@@ -54,6 +63,40 @@ function App() {
       setIsMerged(true);
       return loadImage(true);
     }
+  };
+
+  const checkAndCompressImage = async (file, setImage) => {
+    if (file.size < 500 * 1024) {
+      return 
+    }else{
+      
+          const compressedImage = await compressImage(file, {
+            // 0: is maximum compression
+            // 1: is no compression
+            quality: 0.5,
+      
+            // We want a JPEG file
+            type: "image/jpeg",
+          });
+          setImage(compressedImage);
+
+    }
+
+  };
+
+  const compressImage = async (file, { quality = 1, type = file.type }) => {
+    // Get as image data
+    const imageBitmap = await createImageBitmap(file);
+  
+    // Draw to canvas
+    const canvas = document.createElement("canvas");
+    canvas.width = imageBitmap.width;
+    canvas.height = imageBitmap.height;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(imageBitmap, 0, 0);
+  
+    // Turn into Blob
+    return await new Promise((resolve) => canvas.toBlob(resolve, type, quality));
   };
 
   const loadImage = async (overlap) => {
