@@ -20,14 +20,14 @@ function App() {
 
   const fileReader1 = new FileReader();
 
-  // useEffect(() => {
-  //   if (image) {
-  //     checkAndCompressImage(image, setYourImage);
-  //   }
-  //   if (receipt) {
-  //     checkAndCompressImage(receipt, setReceiptImage);
-  //   }
-  // }, [image, receipt]);
+  useEffect(() => {
+    if (image) {
+      checkAndCompressImage(image, setYourImage);
+    }
+    if (receipt) {
+      checkAndCompressImage(receipt, setReceiptImage);
+    }
+  }, [image, receipt]);
 
   const setImage = (image, title) => {
     if (title === "Reciept") {
