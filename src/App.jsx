@@ -106,7 +106,6 @@ function App() {
     const ctx = canvas.getContext("2d");
 
     img.addEventListener("load", async () => {
-      console.log("Image loaded");
       canvas.width = img.width;
       canvas.height = img.height;
       ctx.drawImage(img, 0, 0);
@@ -116,13 +115,11 @@ function App() {
 
     fileReader1.onload = function (event) {
       img.src = event.target.result;
-      // console.log(event.target.result);
     };
     fileReader1.readAsDataURL(image);
   };
 
   const removeBackground = async (canvas, overlap) => {
-    console.log("Removing background...");
     const ctx = canvas.getContext("2d");
 
     // Loading the model
@@ -174,7 +171,6 @@ function App() {
       mergeImages(canvas.toDataURL("image/png"));
     }
 
-    console.log("background removed");
   };
 
   const mergeImages = (newImgData, overlap) => {
@@ -232,8 +228,6 @@ function App() {
 
     const fileReader2 = new FileReader();
     fileReader2.onload = function (event) {
-      console.log("merging");
-      console.log(newImgData);
       if (newImgData) {
         yourImg.src = newImgData;
       } else {
