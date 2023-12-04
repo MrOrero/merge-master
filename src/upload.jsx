@@ -17,20 +17,23 @@ function Upload({ Icon, title, onSetImage }) {
   return (
     <Container className="upload-box">
       {/* <div className=""> */}
-        <div className="upload-box-content inner-box ">
-          {Icon && <Icon />}
-          <label htmlFor={`fileInput-${title}`} className="upload-label">
-            <span className="upload-box-button">Select {title} file</span>
-            <input
-              type="file"
-              id={`fileInput-${title}`}
-              onChange={e => setImage(e, title)}
-              style={{ display: "none" }}
-            />
-            {yourImage && <p className="text-white mt-2">{yourImage.name}</p>}
-            {receiptImage && <p className="text-white mt-2">{receiptImage.name}</p>}
-          </label>
-        </div>
+      <div className="upload-box-content inner-box ">
+        {Icon && <Icon />}
+        <label htmlFor={`fileInput-${title}`} className="upload-label">
+          <span className="upload-box-button">Select {title}</span>
+          <input
+            type="file"
+            id={`fileInput-${title}`}
+            onChange={(e) => setImage(e, title)}
+            style={{ display: "none" }}
+            accept="image/*"
+          />
+          {yourImage && <p className="text-white mt-2">{yourImage.name}</p>}
+          {receiptImage && (
+            <p className="text-white mt-2">{receiptImage.name}</p>
+          )}
+        </label>
+      </div>
       {/* </div> */}
     </Container>
   );
